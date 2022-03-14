@@ -1,0 +1,29 @@
+name: test
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: install packages
+        run: pip install -r requirements.txt
+
+      - name: run tests
+        env:
+          PYTHONPATH: .
+          COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_REPO_TOKEN}}
+        run: |
+          pytest --cov=torchyin
+          black .
+          flake8 .
+          mypy torchyin
+          coveralls

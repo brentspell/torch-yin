@@ -1,0 +1,38 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: check-ast
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-merge-conflict
+  - repo: local
+    hooks:
+      - id: black
+        name: black
+        language: system
+        entry: black
+        types: [python]
+  - repo: local
+    hooks:
+      - id: flake8
+        name: flake8
+        language: system
+        entry: flake8
+        types: [python]
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy
+        language: system
+        entry: mypy torchyin
+        pass_filenames: false
+        always_run: true
+  - repo: local
+    hooks:
+      - id: pytest
+        name: pytest
+        language: system
+        entry: python -m pytest
+        pass_filenames: false
+        always_run: true
