@@ -79,9 +79,10 @@ tensor([  27.5072,   29.1439,   30.8682,   32.6975,   34.6570,   36.6973,
         3428.5715, 3692.3079, 4000.0000, 4363.6367])
 ```
 
-For more information and detailed parameter descriptions, please see the
-[module documentation](https://github.com/brentspell/torch-yin/blob/main/torchyin/yin.py)
-or use `help(torchyin)`.
+For more information and detailed parameter descriptions, please check
+out [this blog post](https://brentspell.com/2022/torch-yin/), see the
+[module documentation](https://github.com/brentspell/torch-yin/blob/main/torchyin/yin.py),
+or run `help(torchyin)`.
 
 ## Development
 
