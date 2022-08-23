@@ -77,7 +77,7 @@ def estimate(
     return torch.where(
         tau > 0,
         sample_rate / (tau + tau_min + 1).type(signal.dtype),
-        torch.tensor(0).type(signal.dtype),
+        torch.tensor(0, device=tau.device).type(signal.dtype),
     )
 
 
@@ -103,8 +103,8 @@ def _diff(frames: torch.Tensor, tau_max: int) -> torch.Tensor:
     # cumulative mean normalized difference function (equation 8)
     return (
         diff[..., 1:]
-        * torch.arange(1, diff.shape[-1])
-        / np.maximum(diff[..., 1:].cumsum(-1), 1e-5)
+        * torch.arange(1, diff.shape[-1], device=diff.device)
+        / torch.maximum(diff[..., 1:].cumsum(-1), torch.tensor(1e-5, device=diff.device))
     )
 
 
@@ -113,7 +113,7 @@ def _search(cmdf: torch.Tensor, tau_max: int, threshold: float) -> torch.Tensor:
     # if none are below threshold (argmax=0), this is a non-periodic frame
     first_below = (cmdf < threshold).int().argmax(-1, keepdim=True)
     first_below = torch.where(first_below > 0, first_below, tau_max)
-    beyond_threshold = torch.arange(cmdf.shape[-1]) >= first_below
+    beyond_threshold = torch.arange(cmdf.shape[-1], device=cmdf.device) >= first_below
 
     # mask all periods with upward sloping cmdf to find the local minimum
     increasing_slope = torch.nn.functional.pad(cmdf.diff() >= 0.0, [0, 1], value=1)
