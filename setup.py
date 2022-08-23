@@ -5,7 +5,7 @@ from distutils.core import setup
 
 setup(
     name="torch-yin",
-    version="0.1.1",
+    version="0.1.2",
     description="Yin pitch estimator for PyTorch",
     long_description=open("README.md", "r").read(),
     long_description_content_type="text/markdown",
