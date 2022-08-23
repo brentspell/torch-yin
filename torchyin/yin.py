@@ -104,7 +104,10 @@ def _diff(frames: torch.Tensor, tau_max: int) -> torch.Tensor:
     return (
         diff[..., 1:]
         * torch.arange(1, diff.shape[-1], device=diff.device)
-        / torch.maximum(diff[..., 1:].cumsum(-1), torch.tensor(1e-5, device=diff.device))
+        / torch.maximum(
+            diff[..., 1:].cumsum(-1),
+            torch.tensor(1e-5, device=diff.device),
+        )
     )
 
 
